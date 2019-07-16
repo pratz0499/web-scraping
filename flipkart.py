@@ -20,7 +20,7 @@ price=container.findAll("div",{"class":"col col-5-12 _2o7WAb"})
 #print(price[0].text)
 
 ratings=container.findAll("div",{"class":"niH0FQ"})
-#print(ratings[0].text)
+
 
 filename="products.csv"
 f=open(filename,"w")
