@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 user_agent ='Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
 
-url=unquote(["http://pulse.zerodha.com/"])
+url=["http://pulse.zerodha.com/"]
 headers={'User-Agent':user_agent,}
 
 request=urllib.request.Request(url,None,headers)
@@ -42,5 +42,9 @@ for h in soup.find_all('h2'):
   
 for k in links:
   print(k)
+
+
+
+
 
 
