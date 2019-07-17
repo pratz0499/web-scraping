@@ -19,7 +19,7 @@ for i in head_box:
   heading.append(head)
 #for news in data:
  # print(news)
-soup.select('.desc')
+description=soup.select('.desc')
 for j in description:
   des=j.text.strip()
   news.append(des)
