@@ -96,50 +96,50 @@ page_number=1
 details_count=1
 
 
-fields = ['Name', 'Phone', 'Rating', 'Rating Count', 'Address', 'Location']
-out_file = open('customer_details.csv','w')
-csvwriter = csv.DictWriter(out_file, delimiter=',', fieldnames=fields)
+with open("D:\\Organised\\Projects\\DBMS\\customer_details.csv","w") as out_file:
+    fields = ['Name','Phone','Rating','Rating Count','Address','Location']
+    csvwriter = csv.DictWriter(out_file, fieldnames=fields)
+    csvwriter.writeheader()
+    while True:
 
-while True:
+        if page_number>2:
+            break
+        print("here")
+        url="https://www.justdial.com/Bangalore/Estate-Agents-in-Sarakki-Nagar/nct-10192623/page-%s"%(page_number)
+        text = get_article(url)
+        #print(text)
+        soup = BeautifulSoup(text, "html.parser")
+        details = soup.find_all('li', {'class': 'cntanr'})
+        #print(details)
+        #break
+        for i in details:
+            dictionary_details={}
+            name=get_name(i)
+            phone=get_phone_number(i)
+            print(phone)
+            rating=get_rating(i)
+            count=get_rating_count(i)
+            address=get_address(i)
+            location=get_location(i)
 
-    if page_number>2:
-        break
-    print("here")
-    url="https://www.justdial.com/Bangalore/Estate-Agents-in-Sarakki-Nagar/nct-10192623/page-%s"%(page_number)
-    text = get_article(url)
-    # print(text)
-    soup = BeautifulSoup(text, "html.parser")
-    details = soup.find_all('li', {'class': 'cntanr'})
-    # print(details)
-    # break
-    for i in details:
-        dictionary_details={}
-        name=get_name(i)
-        phone=get_phone_number(i)
-        print(phone)
-        rating=get_rating(i)
-        count=get_rating_count(i)
-        address=get_address(i)
-        location=get_location(i)
+            if name != None:
+                dictionary_details['Name'] = name
+            if phone != None:
+                print('getting phone number')
+                dictionary_details['Phone'] = phone
+            if rating != None:
+                dictionary_details['Rating'] = rating
+            if count != None:
+                dictionary_details['Rating Count'] = count
+            if address != None:
+                dictionary_details['Address'] = address
+            if location != None:
+                dictionary_details['Address'] = location
 
-        if name != None:
-            dictionary_details['Name'] = name
-        if phone != None:
-            print('getting phone number')
-            dictionary_details['Phone'] = phone
-        if rating != None:
-            dictionary_details['Rating'] = rating
-        if count != None:
-            dictionary_details['Rating Count'] = count
-        if address != None:
-            dictionary_details['Address'] = address
-        if location != None:
-            dictionary_details['Address'] = location
+            csvwriter.writerow(dictionary_details)
+            print("#" + str(details_count) + " " , dictionary_details)
+            details_count += 1
 
-        csvwriter.writerow(dictionary_details)
-        print("#" + str(details_count) + " " , dictionary_details)
-        details_count += 1
-
-    
-    page_number += 1
-out_file.close()
+        
+        page_number += 1
+    out_file.close()
